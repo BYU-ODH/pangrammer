@@ -28,7 +28,19 @@
 (defn letters-so-far
   "Display for letters used so far"
   []
-  [:div.letters-so-far "Letters so far here"])
+  (into 
+   [:div.letters-so-far]
+   (for [l (char-range \A \Z)
+         :let [lcount (@letters-used l 0)
+               color (if (< lcount 1) "red" "green")]]
+     [:div.letter {:style {:display "inline-block"
+                           :margin-right "1em"}}
+      [:span.letter-name {:style {:margin-right "2px"
+                                  :border-bottom-width 1.5
+                                  :border-bottom-style "solid"
+                                  :border-bottom-color color}} l]
+      [:span.letter-count {:style {:background-color color}}
+       lcount]])))
 
 (defn do-input
   "Input into the text area, updating letters-so-far appropriately"
@@ -37,8 +49,8 @@
         text (str/upper-case text1)
         temp-used (atom {})]
     (reset! INPUT text1)
-    (doseq [t text]
-      (swap! temp-used update t inc))
+    (doseq [T text]
+      (swap! temp-used update T inc))
     (reset! letters-used @temp-used)))
 
 
@@ -49,11 +61,18 @@
               :on-change do-input
               :value @INPUT}])
 
+(defn input-count
+  "Display the count of input"
+  []
+  [:div.input-count
+   (count @INPUT)])
+
 (defn pangrammer
   "The singular Pangrammer view"
   []
   [:div.content
    [:h1 "Pangrammer 3.0!!!!"]
    [letters-so-far]
-   [input-area]])
+   [input-area]
+   [input-count]])
 
