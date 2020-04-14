@@ -1,6 +1,7 @@
 (ns pangrammer.views.main
   (:require [reagent.core :as r]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [pangrammer.views.styles :as style]))
 
 (defonce letters-used (r/atom {}))
 
@@ -32,15 +33,10 @@
    [:div.letters-so-far]
    (for [l (char-range \A \Z)
          :let [lcount (@letters-used l 0)
-               color (if (< lcount 1) "red" "green")]]
-     [:div.letter {:style {:display "inline-block"
-                           :margin-right "1em"}}
-      [:span.letter-name {:style {:margin-right "2px"
-                                  :border-bottom-width 1.5
-                                  :border-bottom-style "solid"
-                                  :border-bottom-color color}} l]
-      [:span.letter-count {:style {:background-color color}}
-       lcount]])))
+               color-style (if (< lcount 1) "hungry" "satisfied")]]
+     [:div.letter {:class color-style}
+      [:span.letter-name l]
+      [:span.letter-count lcount]])))
 
 (defn do-input
   "Input into the text area, updating letters-so-far appropriately"
@@ -52,7 +48,6 @@
     (doseq [T text]
       (swap! temp-used update T inc))
     (reset! letters-used @temp-used)))
-
 
 (defn input-area
   "The input area into which players write"
@@ -70,8 +65,9 @@
 (defn pangrammer
   "The singular Pangrammer view"
   []
+  (style/mount-style (style/pangrammer))
   [:div.content
-   [:h1 "Pangrammer 3.0!!!!"]
+   [:h1 "Pangrammer"]
    [letters-so-far]
    [input-area]
    [input-count]])
