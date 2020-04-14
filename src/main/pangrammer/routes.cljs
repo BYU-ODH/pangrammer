@@ -7,7 +7,7 @@
 (defn default-view
   "To show before routes are loaded"
   []
-  [:h1 "Loading Pangrammer..."])
+  [:h1 "Loading !Pangrammer..."])
 
 
 (def current-view (r/atom default-view) )
