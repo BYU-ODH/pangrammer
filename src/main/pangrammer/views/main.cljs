@@ -29,14 +29,16 @@
 (defn letters-so-far
   "Display for letters used so far"
   []
-  (into 
-   [:div.letters-so-far]
-   (for [l (char-range \A \Z)
-         :let [lcount (@letters-used l 0)
-               color-style (if (< lcount 1) "hungry" "satisfied")]]
-     [:div.letter {:class color-style}
-      [:span.letter-name l]
-      [:span.letter-count lcount]])))
+  (let [score-box
+        (into [:div.content]
+              (for [l (char-range \A \Z)
+                    :let [lcount (@letters-used l 0)
+                          color-style (if (< lcount 1) "hungry" "satisfied")]]
+                [:div.letter {:class color-style}
+                 [:span.letter-name l]
+                 [:span.letter-count lcount]]))]
+    [:div.letters-so-far
+     score-box]))
 
 (defn do-input
   "Input into the text area, updating letters-so-far appropriately"
@@ -52,9 +54,12 @@
 (defn input-area
   "The input area into which players write"
   []
-  [:textarea {:default-value "Input Area"
-              :on-change do-input
-              :value @INPUT}])
+  [:div.content.box
+   [:textarea.textarea.pangrammer-input.is-medium.has-fixed-size
+    {:default-value "Input Area"
+     :on-change do-input
+     :value @INPUT
+     :placeholder "Start your pangram"}]])
 
 (defn input-count
   "Display the count of input"
@@ -62,13 +67,25 @@
   [:div.input-count
    (count @INPUT)])
 
+(defn pangrammer-title
+  "Title Hero for the page"
+  []
+  [:section.hero
+   [:div.hero-body.has-text-centered
+    [:div.container
+     [:h1.title "Pangrammer"]]]])
+
 (defn pangrammer
   "The singular Pangrammer view"
   []
   (style/mount-style (style/pangrammer))
-  [:div.content
-   [:h1 "Pangrammer"]
-   [letters-so-far]
-   [input-area]
-   [input-count]])
+  [:div.container
+   [pangrammer-title]  
+   [:div.columns
+    [:div.column.is-three-quarters
+     [input-area]]                                      
+    [:div.column.is-one-quarter
+     [letters-so-far]]]
+                                        ;[input-count]
+   ])
 

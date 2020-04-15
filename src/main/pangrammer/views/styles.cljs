@@ -10,8 +10,10 @@
    (let [hungry-color "red"
          satisfied-color "#90ee90"]
      [:body
-      [:div.letter {:display "inline-block"
-                    :margin-right "1em"
+      [:.pangrammer-input {}]
+      [:div.letter {:display "block"
+                    :width (em 3)
+                    :margin (px 3)
                     :border-color "black"
                     :border-style "solid"
                     :border-width (px 1)
@@ -19,8 +21,7 @@
                     :padding (px 3)}       
        [:&.hungry
         [:.letter-name {:border-bottom-color hungry-color}]
-        [:.letter-count {:padding (px 2)
-                         :border-radius (px 3)
+        [:.letter-count {:border-radius (px 3)
                          :background-color hungry-color}]]
        [:&.satisfied
         [:letter-name {:border-bottom-color satisfied-color}]
