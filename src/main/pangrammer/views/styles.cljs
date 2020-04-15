@@ -11,8 +11,8 @@
          satisfied-color "#90ee90"]
      [:body
       [:.pangrammer-input {}]
-      [:div.letter {:display "block"
-                    :width (em 3)
+      [:div.letter {:display "inline-block"
+                    :width (em 2.6)
                     :margin (px 3)
                     :border-color "black"
                     :border-style "solid"
@@ -21,8 +21,7 @@
                     :padding (px 3)}       
        [:&.hungry
         [:.letter-name {:border-bottom-color hungry-color}]
-        [:.letter-count {:border-radius (px 3)
-                         :background-color hungry-color}]]
+        [:.letter-count {:background-color hungry-color}]]
        [:&.satisfied
         [:letter-name {:border-bottom-color satisfied-color}]
         [:.letter-count {:background-color satisfied-color}]]]
@@ -31,9 +30,13 @@
                       :border-bottom-width (px 1.5)
                       :border-bottom-style "solid"}]
       [:.letter-count {:display "inline-block"
-                       :height (em 1)
-                       :width (em 0.5)
-                       :padding (em 0.25)}]
+                                        ;:height (em 1)
+                       :border-radius (px 3)
+                       :float "right"
+                       :width (em 1)
+                       :text-align "center"
+                       :vertical-align "middle"
+                       }]
       ])))
 
 (defn clear-styles!
