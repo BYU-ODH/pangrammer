@@ -23,7 +23,7 @@
         [:.letter-name {:border-bottom-color hungry-color}]
         [:.letter-count {:background-color hungry-color}]]
        [:&.satisfied
-        [:letter-name {:border-bottom-color satisfied-color}]
+        [:.letter-name {:border-bottom-style "none"}]
         [:.letter-count {:background-color satisfied-color}]]]
       [:.letter-name {:margin-right (px 2)
                       :font-weight 600
