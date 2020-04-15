@@ -26,12 +26,23 @@
 
 (defonce INPUT (r/atom ""))
 
+(defn sorted-letters
+  "The sequence of letters as sorted by 1) count and 2) alphabetic"
+  []
+  (let [letters (char-range \A \Z)        
+        v (fn [s] (apply - (map (comp js/parseInt #(.charCodeAt % 0)) [\A s])))
+        g #(get @letters-used % (v %))]
+    (sort-by g > letters))) 
+(comment
+  (sorted-letters))
+
+
 (defn letters-so-far
   "Display for letters used so far"
   []
   (let [score-box
         (into [:div.content]
-              (for [l (char-range \A \Z)
+              (for [l (sorted-letters)
                     :let [lcount (@letters-used l 0)
                           color-style (if (< lcount 1) "hungry" "satisfied")]]
                 [:div.letter {:class color-style}
@@ -39,6 +50,7 @@
                  [:span.letter-count lcount]]))]
     [:div.letters-so-far
      score-box]))
+;; sort by 1) count and 2) alphabetical
 
 (defn do-input
   "Input into the text area, updating letters-so-far appropriately"
