@@ -63,6 +63,12 @@
       (swap! temp-used update T inc))
     (reset! letters-used @temp-used)))
 
+(defn input-count
+  "Display the count of input"
+  []
+  [:div.input-count
+   (count @INPUT)])
+
 (defn input-area
   "The input area into which players write"
   []
@@ -71,13 +77,8 @@
     {:default-value "Input Area"
      :on-change do-input
      :value @INPUT
-     :placeholder "Start your pangram"}]])
-
-(defn input-count
-  "Display the count of input"
-  []
-  [:div.input-count
-   (count @INPUT)])
+     :placeholder "Start your pangram"}]
+   [input-count]])
 
 (defn pangrammer-title
   "Title Hero for the page"
@@ -95,9 +96,9 @@
    [pangrammer-title]  
    [:div.columns
     [:div.column.is-three-quarters
-     [input-area]]                                      
+     [input-area]]
     [:div.column.is-one-quarter
      [letters-so-far]]]
-                                        ;[input-count]
+   
    ])
 

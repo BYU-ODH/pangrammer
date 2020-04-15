@@ -10,7 +10,11 @@
    (let [hungry-color "red"
          satisfied-color "#90ee90"]
      [:body
-      [:.pangrammer-input {}]
+      [:div.input-count {:float "right"
+                         :position "relative"
+                         :top (em -1.5)
+                         :right (em 1)}]
+      
       [:div.letter {:display "inline-block"
                     :width (em 2.6)
                     :margin (px 3)
