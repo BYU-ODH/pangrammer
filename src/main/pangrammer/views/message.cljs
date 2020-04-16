@@ -13,6 +13,6 @@
   "The message area to display the content put into the app-db message"
   []
   (when-let [m @MESSAGE] 
-    [:div.message m]))
+    [:div.message.notification.is-info.is-light m]))
 
 
