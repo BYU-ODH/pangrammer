@@ -1,7 +1,8 @@
 (ns pangrammer.views.main
   (:require [reagent.core :as r]
             [clojure.string :as str]
-            [pangrammer.views.styles :as style]))
+            [pangrammer.views.styles :as style]
+            [pangrammer.views.message :as messages]))
 
 (defonce letters-used (r/atom {}))
 
@@ -24,18 +25,29 @@
   (char-range "c" "a") ;; => ("c" "b" "a")
 )
 
+(defn all-letters
+  "Sequence of the letters we care about"
+  []
+  (char-range \A \Z))
+
+
 (defonce INPUT (r/atom ""))
 
 (defn sorted-letters
   "The sequence of letters as sorted by 1) count and 2) alphabetic"
   []
-  (let [letters (char-range \A \Z)        
+  (let [letters (all-letters)        
         v (fn [s] (apply - (map (comp js/parseInt #(.charCodeAt % 0)) [\A s])))
         g #(get @letters-used % (v %))]
     (sort-by g > letters))) 
 (comment
   (sorted-letters))
 
+(defn pangram-complete?
+  "Has every letter been used?"
+  []
+  (let [letters (all-letters)]
+    (every? pos? (map @letters-used letters))))
 
 (defn letters-so-far
   "Display for letters used so far"
@@ -49,8 +61,8 @@
                  [:span.letter-name l]
                  [:span.letter-count lcount]]))]
     [:div.letters-so-far
-     score-box]))
-;; sort by 1) count and 2) alphabetical
+     score-box
+     #_sort-direction-button]))
 
 (defn do-input
   "Input into the text area, updating letters-so-far appropriately"
@@ -88,17 +100,26 @@
     [:div.container
      [:h1.title "Pangrammer"]]]])
 
+(defn message-pangram-complete
+  "Set a message indicating the completion of the pangram"
+  []
+  (let [complete-message
+        [:div.content.box
+         "Success -- pangram complete!"]]
+    (reset! messages/MESSAGE complete-message)))
+
 (defn pangrammer
   "The singular Pangrammer view"
   []
   (style/mount-style (style/pangrammer))
+  (if (pangram-complete?)
+    (message-pangram-complete)
+    (messages/clear-message))
   [:div.container
    [pangrammer-title]  
    [:div.columns
     [:div.column.is-three-quarters
      [input-area]]
     [:div.column.is-one-quarter
-     [letters-so-far]]]
-   
-   ])
+     [letters-so-far]]]])
 
