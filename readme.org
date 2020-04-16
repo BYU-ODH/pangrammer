@@ -3,7 +3,7 @@
 * Pangrammer v3
 [[pangram.png]]
 
-A single-page app for the creation of [[https://en.wikipedia.org/wiki/Pangram][pangrams]]. Visible in action at http://pangrammer.byu.edu/. 
+A single-page (literally -- single view) app for the creation of [[https://en.wikipedia.org/wiki/Pangram][pangrams]]. Visible in action at http://pangrammer.byu.edu/. 
 * Technology
 Created with pure Clojurescript using [[https://shadow-cljs.org/][ShadowCLJS]] and [[https://holmsand.github.io/reagent/][Reagent]]. 
 
