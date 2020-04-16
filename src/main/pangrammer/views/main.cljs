@@ -31,6 +31,16 @@
   []
   (char-range \A \Z))
 
+(defn letters-remaining
+  []
+  (let [all (all-letters)
+        letters-with-count (zipmap
+                            all
+                            (map @letters-used all))]
+    (->> letters-with-count
+        (filter #(pos? (val %)))
+        count
+        (- (count all)))))
 
 (defonce INPUT (r/atom ""))
 
@@ -109,15 +119,34 @@
   [:section.hero
    [:div.hero-body.has-text-centered
     [:div.container
-     [:h1.title "Pangrammer"]]]])
+     [:h1.title "Pangrammer"]
+     [:h2.subtitle
+      "Pangram: A sentence containing every letter of the alphabet"]]]])
 
 (defn message-pangram-complete
   "Set a message indicating the completion of the pangram"
   []
   (let [complete-message
         [:div.content.box
-         "Success -- pangram complete!"]]
-    (reset! messages/MESSAGE complete-message)))
+         (str "Success -- pangram complete in " (count @INPUT) " characters!")]]
+    (do 
+      (reset! messages/MESSAGE-CLASSES "is-success")
+      (reset! messages/MESSAGE complete-message))))
+
+(defn message-letters-remaining
+  "Display a message for the number of letters remaining to be used"
+  []
+  (let [r (letters-remaining)
+        one-left? (= 1 r)]
+    (if one-left?
+      (reset! messages/MESSAGE-CLASSES "is-warning")
+      (reset! messages/MESSAGE-CLASSES messages/default-styles))
+    (reset! messages/MESSAGE
+            [:div.content.box
+             (if one-left?
+               "Just one letter remaining"
+               (str r " letters remaining"))])))
+
 
 (defn pangrammer
   "The singular Pangrammer view"
@@ -125,7 +154,7 @@
   (style/mount-style (style/pangrammer))
   (if (pangram-complete?)
     (message-pangram-complete)
-    (messages/clear-message))
+    (message-letters-remaining))
   [:div.container
    [pangrammer-title]  
    [:div.columns

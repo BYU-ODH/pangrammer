@@ -9,10 +9,15 @@
   (when @MESSAGE
     (reset! MESSAGE nil)))
 
+(def default-styles
+  ["is-info" "is-light"])
+
+(defonce MESSAGE-CLASSES (r/atom default-styles))
+
 (defn message-view
   "The message area to display the content put into the app-db message"
   []
   (when-let [m @MESSAGE] 
-    [:div.message.notification.is-info.is-light m]))
+    [:div.message.notification {:class @MESSAGE-CLASSES} m]))
 
 

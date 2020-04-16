@@ -1,7 +1,6 @@
 (ns pangrammer.views.styles
   (:require [garden.core :as garden :refer [css] ]
-            [garden.units :as u :refer [px em rem percent]]
-            [garden.color :as c :refer [hex->hsl hsl->hex hsl hsla]]))
+            [garden.units :as u :refer [px em rem percent]]))
 
 (defn pangrammer
   "Our stylesheet"
@@ -10,6 +9,9 @@
    (let [hungry-color "red"
          satisfied-color "#90ee90"]
      [:body
+      [:.message.is-success
+       [:.content {:color "green"
+                   :font-weight 600}]]
       [:div.input-count {:float "right"
                          :position "relative"
                          :top (em -1.5)
