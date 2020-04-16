@@ -1,8 +1,9 @@
 #+TITLE: Pangrammer
 #+DATE: [2020-04-16 Thu]
 * Pangrammer v3
-A single-page app for the creation of [[https://en.wikipedia.org/wiki/Pangram][pangrams]]. Visible in action at http://pangrammer.byu.edu/. 
+[[pangram.png]]
 
+A single-page app for the creation of [[https://en.wikipedia.org/wiki/Pangram][pangrams]]. Visible in action at http://pangrammer.byu.edu/. 
 * Technology
 Created with pure Clojurescript using [[https://shadow-cljs.org/][ShadowCLJS]] and [[https://holmsand.github.io/reagent/][Reagent]]. 
 
