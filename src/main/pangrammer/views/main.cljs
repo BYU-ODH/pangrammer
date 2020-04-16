@@ -49,6 +49,17 @@
   (let [letters (all-letters)]
     (every? pos? (map @letters-used letters))))
 
+(def SORT-BY-COMPLETE? (r/atom true))
+(defn sort-button
+  "Button to determine the direction of sorting"
+  []
+  (let [icon (if @SORT-BY-COMPLETE?
+               [:i.fas.fa-sort-amount-up]
+               [:i.fas.fa-sort-alpha-down]) ]
+    [:a.button.is-info.sort-button {:on-click #(swap! SORT-BY-COMPLETE? not)}
+     icon]))
+
+
 (defn letters-so-far
   "Display for letters used so far"
   []
@@ -61,6 +72,7 @@
                  [:span.letter-name l]
                  [:span.letter-count lcount]]))]
     [:div.letters-so-far
+     [sort-button]
      score-box
      #_sort-direction-button]))
 
