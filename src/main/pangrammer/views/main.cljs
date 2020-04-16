@@ -5,6 +5,7 @@
             [pangrammer.views.message :as messages]))
 
 (defonce letters-used (r/atom {}))
+(def SORT-BY-COMPLETE? (r/atom true))
 
 (defn get-value-from-change [e]
   (.. e -target -value))
@@ -37,11 +38,11 @@
   "The sequence of letters as sorted by 1) count and 2) alphabetic"
   []
   (let [letters (all-letters)        
-        v (fn [s] (apply - (map (comp js/parseInt #(.charCodeAt % 0)) [\A s])))
-        g #(get @letters-used % (v %))]
-    (sort-by g > letters))) 
-(comment
-  (sorted-letters))
+        char-value-for-sort (fn [s] (apply - (map (comp js/parseInt #(.charCodeAt % 0)) [\A s])))
+        g #(get @letters-used % (char-value-for-sort %))]
+    (if @SORT-BY-COMPLETE?
+      (sort-by g > letters)
+      letters))) 
 
 (defn pangram-complete?
   "Has every letter been used?"
@@ -49,7 +50,6 @@
   (let [letters (all-letters)]
     (every? pos? (map @letters-used letters))))
 
-(def SORT-BY-COMPLETE? (r/atom true))
 (defn sort-button
   "Button to determine the direction of sorting"
   []
@@ -73,8 +73,7 @@
                  [:span.letter-count lcount]]))]
     [:div.letters-so-far
      [sort-button]
-     score-box
-     #_sort-direction-button]))
+     score-box]))
 
 (defn do-input
   "Input into the text area, updating letters-so-far appropriately"
