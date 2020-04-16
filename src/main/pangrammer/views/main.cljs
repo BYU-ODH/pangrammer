@@ -66,7 +66,8 @@
   (let [icon (if @SORT-BY-COMPLETE?
                [:i.fas.fa-sort-amount-up]
                [:i.fas.fa-sort-alpha-down]) ]
-    [:a.button.is-info.sort-button {:on-click #(swap! SORT-BY-COMPLETE? not)}
+    [:a.button.is-info.sort-button {:on-click #(swap! SORT-BY-COMPLETE? not)
+                                    :title "Sort alphabetically or by letters used"}
      icon]))
 
 
