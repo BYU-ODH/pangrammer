@@ -51,7 +51,7 @@
         char-value-for-sort (fn [s] (apply - (map (comp js/parseInt #(.charCodeAt % 0)) [\A s])))
         g #(get @letters-used % (char-value-for-sort %))]
     (if @SORT-BY-COMPLETE?
-      (sort-by g > letters)
+      (sort-by g < letters)
       letters))) 
 
 (defn pangram-complete?
