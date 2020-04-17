@@ -4,8 +4,9 @@
 [[pangram.png]]
 
 A single-page (literally -- single view) app for the creation of [[https://en.wikipedia.org/wiki/Pangram][pangrams]]. Visible in action at http://pangrammer.byu.edu/. 
+
 * Technology
-Created with pure Clojurescript using [[https://shadow-cljs.org/][ShadowCLJS]] and [[https://holmsand.github.io/reagent/][Reagent]]. 
+Created with pure Clojurescript using [[https://shadow-cljs.org/][ShadowCLJS]] and [[https://holmsand.github.io/reagent/][Reagent]]. Styles with [[https://bulma.io/][Bulma]] and [[https://fontawesome.com/][Font Awesome]].
 
 * License
 ©2020 BYU Office of Digital Humanities, Eclipse Public License
